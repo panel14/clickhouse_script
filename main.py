@@ -48,16 +48,18 @@ def random_date(start, end, prop):
     return str_time_prop(start, end, '%Y-%m-%d %H:%M:%S', prop)
 
 
-def insert_ages_grouped_by_flight_frequency(r_strings, count):
+def insert_ages_grouped_by_flight_frequency(r_strings):
 
     print('Creating data ages_grouped_by_flight_frequency')
+
+    count = 12672   # (53 - 6 + 1) * 22 * 12
 
     months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
               "NOVEMBER", "DECEMBER"]
 
     table_data = [
-        (random.randint(5, 55), random.choice(r_strings),
-         random.choice(months),
+        (int(_ / (12 * 22)) + 6, r_strings[int(_ / 12) % 22],
+         months[_ % 12],
          random.randint(1, 5))
         for _ in range(count)
     ]
@@ -228,11 +230,11 @@ for i in range(routes_count):
     routes_strings.append(create_route_string(i, routes_table, locations_table))
 
 
-insert_ages_grouped_by_flight_frequency(routes_strings, INSERTED_ROWS_COUNT)
-insert_flights_humans_cost(routes_strings, INSERTED_ROWS_COUNT)
-insert_flight_duration_options(routes_strings, INSERTED_ROWS_COUNT)
-insert_profit_flights(routes_strings, INSERTED_ROWS_COUNT)
-insert_profitable_flights_routes(routes_strings, INSERTED_ROWS_COUNT)
+insert_ages_grouped_by_flight_frequency(routes_strings)
+#insert_flights_humans_cost(routes_strings, INSERTED_ROWS_COUNT)
+#insert_flight_duration_options(routes_strings, INSERTED_ROWS_COUNT)
+#insert_profit_flights(routes_strings, INSERTED_ROWS_COUNT)
+#insert_profitable_flights_routes(routes_strings, INSERTED_ROWS_COUNT)
 
 client.disconnect()
 
